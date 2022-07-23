@@ -4,9 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Dana/AndroidStudioProjects/clickerTwo/app/src/main/res/drawable/nfo_btn.xml" value="0.3359375" />
-        <entry key="..\:/Users/Dana/AndroidStudioProjects/clickerTwo/app/src/main/res/layout/activity_first_screen.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/Dana/AndroidStudioProjects/clickerTwo/app/src/main/res/layout/activity_first_screen.xml" value="0.33" />
         <entry key="..\:/Users/Dana/AndroidStudioProjects/clickerTwo/app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="..\:/Users/Dana/AndroidStudioProjects/clickerTwo/app/src/main/res/layout/activity_main.xml" value="0.28804347826086957" />
+        <entry key="..\:/Users/Dana/AndroidStudioProjects/clickerTwo/app/src/main/res/layout/activity_register.xml" value="0.1" />
       </map>
     </option>
   </component>
