@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ClickerTwo">
         <activity
+            android:name=".Screen.GameScreen"
+            android:exported="false" />
+        <activity
             android:name=".Screen.Personality.RegisterActivity"
             android:exported="false" />
         <activity
