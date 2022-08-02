@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="orange">#FF9524</color>
     <color name="btn_play">#DDDD2B</color>
+    <color name="blue_stroke">#2A3DA4</color>
 </resources>

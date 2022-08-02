@@ -3,20 +3,32 @@ package com.example.clickertwo.Screen.FragmentScreen;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.Dimension;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewTreeViewModelStoreOwner;
+import androidx.viewpager.widget.ViewPager;
 
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.clickertwo.CardView.AdapterCard;
+import com.example.clickertwo.CardView.MeModelCard;
 import com.example.clickertwo.R;
 import com.example.clickertwo.Screen.GameScreen;
+
+import java.util.ArrayList;
 
 public class MainFragment extends Fragment {
 
     AppCompatButton btnPlay;
+
+    ArrayList<MeModelCard> modelArrayList;
+    AdapterCard myAdapter;
+    ViewPager viewPager;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -53,15 +65,35 @@ public class MainFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
-        btnPlay = view.findViewById(R.id.btn_play);
-        btnPlay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), GameScreen.class);
-                startActivity(intent);
-            }
-        });
+        viewPager = view.findViewById(R.id.viewPager);
+        loadCard();
 
         return view;
+    }
+
+    private void loadCard() {
+        modelArrayList = new ArrayList<>();
+
+        modelArrayList.add(new MeModelCard(
+                "Get 5\n" + "points", "Up to 50 clicks\n" +
+                "10 second", true, "Easy"
+        ));
+
+        modelArrayList.add(new MeModelCard(
+                "Get 10\n" + "points", "Up to 100 clicks\n" +
+                "20 second", false, "Norm"
+        ));
+
+        modelArrayList.add(new MeModelCard(
+                "Get 15\n" + "points", "Up to 100 clicks\n" +
+                "20 second", false, "Difficult"
+        ));
+
+        DisplayMetrics dm = getResources().getDisplayMetrics();
+        float fwidth = dm.density * dm.widthPixels;
+
+        myAdapter = new AdapterCard(getActivity(), modelArrayList);
+        viewPager.setAdapter(myAdapter);
+        viewPager.setPadding(0, 50, 0, 0);
     }
 }
