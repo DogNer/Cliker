@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ClickerTwo">
         <activity
+            android:name=".GameScreen.GameHard"
+            android:exported="false" />
+        <activity
+            android:name=".GameScreen.GameNorm"
+            android:exported="false" />
+        <activity
             android:name=".Screen.GameScreen"
             android:exported="false" />
         <activity

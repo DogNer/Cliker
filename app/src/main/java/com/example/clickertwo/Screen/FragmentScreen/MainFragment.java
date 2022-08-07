@@ -1,6 +1,7 @@
 package com.example.clickertwo.Screen.FragmentScreen;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.Dimension;
@@ -9,10 +10,12 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewTreeViewModelStoreOwner;
 import androidx.viewpager.widget.ViewPager;
 
+import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.clickertwo.CardView.AdapterCard;
 import com.example.clickertwo.CardView.MeModelCard;
@@ -28,6 +31,8 @@ public class MainFragment extends Fragment {
     ArrayList<MeModelCard> modelArrayList;
     AdapterCard myAdapter;
     ViewPager viewPager;
+
+    TextView count_point, countLife;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -68,6 +73,18 @@ public class MainFragment extends Fragment {
         viewPager = view.findViewById(R.id.viewPager);
         loadCard();
 
+        count_point = view.findViewById(R.id.countPoint);
+        countLife = view.findViewById(R.id.count_life);
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        int age = sharedPreferences.getInt("score", 0);
+        int life = sharedPreferences.getInt("life", 7);
+
+        countLife.setText(String.valueOf(life));
+        count_point.setText(String.valueOf(age));
+
         return view;
     }
 
@@ -80,13 +97,13 @@ public class MainFragment extends Fragment {
         ));
 
         modelArrayList.add(new MeModelCard(
-                "Get 10\n" + "points", "Up to 100 clicks\n" +
+                "Get 10\n" + "points", "Up to 60 clicks\n" +
                 "20 second", false, "Norm"
         ));
 
         modelArrayList.add(new MeModelCard(
                 "Get 15\n" + "points", "Up to 100 clicks\n" +
-                "20 second", false, "Difficult"
+                "25 second", false, "Difficult"
         ));
 
         DisplayMetrics dm = getResources().getDisplayMetrics();

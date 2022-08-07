@@ -1,6 +1,5 @@
-package com.example.clickertwo.Screen;
+package com.example.clickertwo.GameScreen;
 
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.cardview.widget.CardView;
@@ -18,28 +17,29 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.clickertwo.GameScreen.GameHard;
 import com.example.clickertwo.R;
-import com.example.clickertwo.Screen.FragmentScreen.MainFragment;
+import com.example.clickertwo.Screen.FirstScreen;
+import com.example.clickertwo.Screen.GameScreen;
 
 import java.util.Random;
 
-public class GameScreen extends AppCompatActivity {
+public class GameHard extends AppCompatActivity {
 
     TextView timer, countClick, clickNeed;
-    int count_clicks = 0;
+    int count_clicks = 0, needcl = 0;
 
     AppCompatButton btn_click;
+
     TextView needsClick, yourClick;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game_screen);
+        setContentView(R.layout.activity_game_hard);
+
 
         timer = findViewById(R.id.timer);
 
@@ -48,22 +48,21 @@ public class GameScreen extends AppCompatActivity {
         clickNeed = findViewById(R.id.needClicks);
 
 
-        final int random = new Random().nextInt(20) + 20;
+        final int random = new Random().nextInt(60) + 40;
         clickNeed.setText(String.valueOf(random));
 
-        ProgressDialog pd = new ProgressDialog(GameScreen.this);
+        ProgressDialog pd = new ProgressDialog(GameHard.this);
         pd.setMessage("Please wait...");
         pd.show();
 
-
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(GameScreen.this);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(GameHard.this);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        new CountDownTimer(13000, 1000){
+        new CountDownTimer(28000, 1000){
 
             @Override
             public void onTick(long millisUntilFinished) {
-                if (millisUntilFinished / 1000 <= 10){
+                if (millisUntilFinished / 1000 <= 25){
                     timer.setText(millisUntilFinished / 1000 + " sec");
                     btn_click.setEnabled(true);
                     pd.dismiss();
@@ -80,7 +79,7 @@ public class GameScreen extends AppCompatActivity {
                 btn_click.setEnabled(false);
 
                 if (random == count_clicks){
-                    //Toast.makeText(GameScreen.this, "You win", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(GameHard.this, "You win", Toast.LENGTH_SHORT).show();
                     showDialogWin();
 
                     int age = sharedPreferences.getInt("score", 0) + 5;
@@ -104,13 +103,13 @@ public class GameScreen extends AppCompatActivity {
                 count_clicks++;
                 String s = String.valueOf(count_clicks);
                 countClick.setText(s);
-                //if (count_clicks > 6) countClick.setVisibility(View.GONE);
+                if (count_clicks > 6) countClick.setVisibility(View.INVISIBLE);
             }
         });
     }
 
     private void showDialogWin() {
-        final Dialog dialog = new Dialog(GameScreen.this);
+        final Dialog dialog = new Dialog(GameHard.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.bottomsheet_win);
 
@@ -127,7 +126,7 @@ public class GameScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    Intent intent = new Intent(GameScreen.this, FirstScreen.class);
+                    Intent intent = new Intent(GameHard.this, FirstScreen.class);
                     startActivity(intent);
                     finish();
                 }
@@ -142,7 +141,7 @@ public class GameScreen extends AppCompatActivity {
     }
 
     private void showDialogLose(int needcl, int yourcl) {
-        final Dialog dialog = new Dialog(GameScreen.this);
+        final Dialog dialog = new Dialog(GameHard.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.bottomsheet_lose);
 
@@ -153,6 +152,7 @@ public class GameScreen extends AppCompatActivity {
         needsClick.setText(String.valueOf(needcl));
         yourClick.setText(String.valueOf(yourcl));
 
+
         CardView btnHome = dialog.findViewById(R.id.btn_menu);
         CardView btnRestart = dialog.findViewById(R.id.btn_restart);
 
@@ -160,7 +160,7 @@ public class GameScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    Intent intent = new Intent(GameScreen.this, FirstScreen.class);
+                    Intent intent = new Intent(GameHard.this, FirstScreen.class);
                     startActivity(intent);
                     finish();
                 }

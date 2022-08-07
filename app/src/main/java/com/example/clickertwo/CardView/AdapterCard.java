@@ -11,7 +11,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
+import com.example.clickertwo.GameScreen.GameHard;
+import com.example.clickertwo.GameScreen.GameNorm;
 import com.example.clickertwo.R;
+import com.example.clickertwo.Screen.FragmentScreen.MainFragment;
+import com.example.clickertwo.Screen.GameScreen;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
@@ -63,6 +67,24 @@ public class AdapterCard extends PagerAdapter {
         if (model.getSpecial_fich()){
             special_fich_text.setVisibility(view.INVISIBLE);
         }
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (position == 0){
+                    Intent intent = new Intent(view.getContext(), GameScreen.class);
+                    view.getContext().startActivity(intent);
+                }
+                else if (position == 1){
+                    Intent intent = new Intent(view.getContext(), GameNorm.class);
+                    view.getContext().startActivity(intent);
+                }
+                else if (position == 2){
+                    Intent intent = new Intent(view.getContext(), GameHard.class);
+                    view.getContext().startActivity(intent);
+                }
+            }
+        });
         container.addView(view, position);
 
         return view;
