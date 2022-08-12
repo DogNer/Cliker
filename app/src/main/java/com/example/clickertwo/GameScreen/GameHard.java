@@ -23,7 +23,12 @@ import android.widget.Toast;
 import com.example.clickertwo.R;
 import com.example.clickertwo.Screen.FirstScreen;
 import com.example.clickertwo.Screen.GameScreen;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
 import java.util.Random;
 
 public class GameHard extends AppCompatActivity {
@@ -34,6 +39,8 @@ public class GameHard extends AppCompatActivity {
     AppCompatButton btn_click;
 
     TextView needsClick, yourClick;
+
+    FirebaseUser firebaseUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,12 +54,16 @@ public class GameHard extends AppCompatActivity {
         btn_click = findViewById(R.id.btn_click);
         clickNeed = findViewById(R.id.needClicks);
 
+        FirebaseAuth firebaseAuth;
+
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         final int random = new Random().nextInt(60) + 40;
         clickNeed.setText(String.valueOf(random));
 
         ProgressDialog pd = new ProgressDialog(GameHard.this);
         pd.setMessage("Please wait...");
+        pd.setCancelable(false);
         pd.show();
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(GameHard.this);
@@ -82,9 +93,16 @@ public class GameHard extends AppCompatActivity {
                     //Toast.makeText(GameHard.this, "You win", Toast.LENGTH_SHORT).show();
                     showDialogWin();
 
-                    int age = sharedPreferences.getInt("score", 0) + 5;
-                    editor.putInt("score", age);
+                    int score = sharedPreferences.getInt("score", 0) + 15;
+                    editor.putInt("score", score);
                     editor.commit();
+
+                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
+
+                    HashMap<String, Object> hashMap = new HashMap<>();
+                    hashMap.put("score", String.valueOf(score));
+
+                    reference.updateChildren(hashMap);
                 }
                 else {
                     showDialogLose(random, count_clicks);
@@ -112,7 +130,7 @@ public class GameHard extends AppCompatActivity {
         final Dialog dialog = new Dialog(GameHard.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.bottomsheet_win);
-
+        dialog.setCancelable(false);
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         //dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
@@ -137,6 +155,21 @@ public class GameHard extends AppCompatActivity {
             }
         });
 
+        btnRestart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    Intent intent = getIntent();
+                    finish();
+                    startActivity(intent);
+                }
+                catch (Exception e){
+
+                }
+                dialog.dismiss();
+            }
+        });
+
         dialog.show();
     }
 
@@ -145,7 +178,7 @@ public class GameHard extends AppCompatActivity {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.bottomsheet_lose);
 
-
+        dialog.setCancelable(false);
         needsClick = dialog.findViewById(R.id.need_click);
         yourClick = dialog.findViewById(R.id.your_click);
 
@@ -163,6 +196,21 @@ public class GameHard extends AppCompatActivity {
                     Intent intent = new Intent(GameHard.this, FirstScreen.class);
                     startActivity(intent);
                     finish();
+                }
+                catch (Exception e){
+
+                }
+                dialog.dismiss();
+            }
+        });
+
+        btnRestart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    Intent intent = getIntent();
+                    finish();
+                    startActivity(intent);
                 }
                 catch (Exception e){
 

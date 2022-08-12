@@ -40,11 +40,14 @@ public class LoginActivity extends AppCompatActivity {
     ImageButton btnBack;
     AppCompatButton btnLogin;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         auth = FirebaseAuth.getInstance();
+
+
 
         email = findViewById(R.id.text_email);
         password = findViewById(R.id.text_password);

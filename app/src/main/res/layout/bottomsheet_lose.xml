@@ -40,7 +40,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:fontFamily="@font/comfortaa"
-                    android:text="Click ypu need"
+                    android:text="@string/needscl"
                     android:textColor="@color/black"
                     android:textSize="20dp" />
 
@@ -68,7 +68,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:fontFamily="@font/comfortaa"
-                    android:text="Your clicks"
+                    android:text="@string/yourcl"
                     android:textColor="@color/black"
                     android:textSize="20dp"
                     android:gravity="center"/>
@@ -80,7 +80,7 @@
                     android:layout_alignParentEnd="true"
                     android:fontFamily="@font/comfortaa"
                     android:gravity="right"
-                    android:text="43"
+                    android:text="."
                     android:textColor="@color/black"
                     android:textSize="24dp"
                     android:textStyle="bold" />
@@ -106,7 +106,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="20dp"
-                    android:text="Restart"
+                    android:text="@string/restart"
                     android:textColor="@color/black"
                     android:textSize="18dp"
                     android:fontFamily="@font/comfortaa"
@@ -125,7 +125,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Menu"
+                    android:text="@string/menu"
                     android:padding="20dp"
                     android:textColor="@color/black"
                     android:textSize="18dp"

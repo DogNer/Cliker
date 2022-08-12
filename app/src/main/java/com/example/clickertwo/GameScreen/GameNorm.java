@@ -23,7 +23,12 @@ import android.widget.Toast;
 import com.example.clickertwo.R;
 import com.example.clickertwo.Screen.FirstScreen;
 import com.example.clickertwo.Screen.GameScreen;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
 import java.util.Random;
 
 public class GameNorm extends AppCompatActivity {
@@ -32,7 +37,7 @@ public class GameNorm extends AppCompatActivity {
     int count_clicks = 0, needcl = 0;
 
     AppCompatButton btn_click;
-
+    FirebaseUser firebaseUser;
     TextView needsClick, yourClick;
 
     @Override
@@ -46,12 +51,14 @@ public class GameNorm extends AppCompatActivity {
         btn_click = findViewById(R.id.btn_click);
         clickNeed = findViewById(R.id.needClicks);
 
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        final int random = new Random().nextInt(40) + 20;
+        final int random = new Random().nextInt(20) + 40;
         clickNeed.setText(String.valueOf(random));
 
         ProgressDialog pd = new ProgressDialog(GameNorm.this);
         pd.setMessage("Please wait...");
+        pd.setCancelable(false);
         pd.show();
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(GameNorm.this);
@@ -81,9 +88,16 @@ public class GameNorm extends AppCompatActivity {
                     //Toast.makeText(GameNorm.this, "You win", Toast.LENGTH_SHORT).show();
                     showDialogWin();
 
-                    int age = sharedPreferences.getInt("score", 0) + 5;
-                    editor.putInt("score", age);
+                    int score = sharedPreferences.getInt("score", 0) + 10;
+                    editor.putInt("score", score);
                     editor.commit();
+
+                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
+
+                    HashMap<String, Object> hashMap = new HashMap<>();
+                    hashMap.put("score", String.valueOf(score));
+
+                    reference.updateChildren(hashMap);
                 }
                 else {
                     showDialogLose(random, count_clicks);
@@ -117,6 +131,7 @@ public class GameNorm extends AppCompatActivity {
         //dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         dialog.getWindow().setGravity(Gravity.CENTER);
         dialog.setCancelable(false);
+        dialog.setCancelable(false);
 
         CardView btnHome = dialog.findViewById(R.id.btn_menu);
         CardView btnRestart = dialog.findViewById(R.id.btn_restart);
@@ -136,6 +151,21 @@ public class GameNorm extends AppCompatActivity {
             }
         });
 
+        btnRestart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    Intent intent = getIntent();
+                    finish();
+                    startActivity(intent);
+                }
+                catch (Exception e){
+
+                }
+                dialog.dismiss();
+            }
+        });
+
         dialog.show();
     }
 
@@ -144,7 +174,7 @@ public class GameNorm extends AppCompatActivity {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.bottomsheet_lose);
 
-
+        dialog.setCancelable(false);
         needsClick = dialog.findViewById(R.id.need_click);
         yourClick = dialog.findViewById(R.id.your_click);
 
@@ -161,6 +191,21 @@ public class GameNorm extends AppCompatActivity {
                     Intent intent = new Intent(GameNorm.this, FirstScreen.class);
                     startActivity(intent);
                     finish();
+                }
+                catch (Exception e){
+
+                }
+                dialog.dismiss();
+            }
+        });
+
+        btnRestart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    Intent intent = getIntent();
+                    finish();
+                    startActivity(intent);
                 }
                 catch (Exception e){
 

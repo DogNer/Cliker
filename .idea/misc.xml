@@ -5,22 +5,26 @@
       <map>
         <entry key="..\:/Users/Dana/AndroidStudioProjects/clickerTwo/app/src/main/res/drawable/bg_bottom_sheet_win.xml" value="0.3828125" />
         <entry key="..\:/Users/Dana/AndroidStudioProjects/clickerTwo/app/src/main/res/drawable/blue_view.xml" value="0.3828125" />
+        <entry key="..\:/Users/Dana/AndroidStudioProjects/clickerTwo/app/src/main/res/drawable/circle.xml" value="0.3828125" />
         <entry key="..\:/Users/Dana/AndroidStudioProjects/clickerTwo/app/src/main/res/drawable/circle_btn.xml" value="0.3828125" />
+        <entry key="..\:/Users/Dana/AndroidStudioProjects/clickerTwo/app/src/main/res/drawable/ellipse_57.xml" value="0.3828125" />
         <entry key="..\:/Users/Dana/AndroidStudioProjects/clickerTwo/app/src/main/res/drawable/nfo_btn.xml" value="0.3359375" />
         <entry key="..\:/Users/Dana/AndroidStudioProjects/clickerTwo/app/src/main/res/drawable/white_btn.xml" value="0.3828125" />
         <entry key="..\:/Users/Dana/AndroidStudioProjects/clickerTwo/app/src/main/res/layout/activity_first_screen.xml" value="0.33" />
-        <entry key="..\:/Users/Dana/AndroidStudioProjects/clickerTwo/app/src/main/res/layout/activity_game_hard.xml" value="0.2359375" />
-        <entry key="..\:/Users/Dana/AndroidStudioProjects/clickerTwo/app/src/main/res/layout/activity_game_norm.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Dana/AndroidStudioProjects/clickerTwo/app/src/main/res/layout/activity_game_hard.xml" value="0.1" />
+        <entry key="..\:/Users/Dana/AndroidStudioProjects/clickerTwo/app/src/main/res/layout/activity_game_norm.xml" value="0.1" />
         <entry key="..\:/Users/Dana/AndroidStudioProjects/clickerTwo/app/src/main/res/layout/activity_game_screen.xml" value="0.25" />
-        <entry key="..\:/Users/Dana/AndroidStudioProjects/clickerTwo/app/src/main/res/layout/activity_login.xml" value="0.25" />
+        <entry key="..\:/Users/Dana/AndroidStudioProjects/clickerTwo/app/src/main/res/layout/activity_login.xml" value="0.1" />
         <entry key="..\:/Users/Dana/AndroidStudioProjects/clickerTwo/app/src/main/res/layout/activity_main.xml" value="0.28804347826086957" />
         <entry key="..\:/Users/Dana/AndroidStudioProjects/clickerTwo/app/src/main/res/layout/activity_register.xml" value="0.1" />
+        <entry key="..\:/Users/Dana/AndroidStudioProjects/clickerTwo/app/src/main/res/layout/activity_settings.xml" value="0.33" />
         <entry key="..\:/Users/Dana/AndroidStudioProjects/clickerTwo/app/src/main/res/layout/botomsheet_win.xml" value="0.1" />
         <entry key="..\:/Users/Dana/AndroidStudioProjects/clickerTwo/app/src/main/res/layout/bottomsheet_lose.xml" value="0.22" />
         <entry key="..\:/Users/Dana/AndroidStudioProjects/clickerTwo/app/src/main/res/layout/bottomsheet_win.xml" value="0.33" />
-        <entry key="..\:/Users/Dana/AndroidStudioProjects/clickerTwo/app/src/main/res/layout/card_item.xml" value="0.25" />
+        <entry key="..\:/Users/Dana/AndroidStudioProjects/clickerTwo/app/src/main/res/layout/card_item.xml" value="0.1" />
+        <entry key="..\:/Users/Dana/AndroidStudioProjects/clickerTwo/app/src/main/res/layout/ellipse_57.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Dana/AndroidStudioProjects/clickerTwo/app/src/main/res/layout/fragment_main.xml" value="0.22" />
-        <entry key="..\:/Users/Dana/AndroidStudioProjects/clickerTwo/app/src/main/res/layout/fragment_profile.xml" value="0.2911458333333333" />
+        <entry key="..\:/Users/Dana/AndroidStudioProjects/clickerTwo/app/src/main/res/layout/fragment_profile.xml" value="0.33" />
         <entry key="..\:/Users/Dana/AndroidStudioProjects/clickerTwo/app/src/main/res/menu/bottom_nav.xml" value="0.25" />
       </map>
     </option>

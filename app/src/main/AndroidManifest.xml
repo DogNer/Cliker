@@ -9,6 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ClickerTwo">
+        <service
+            android:name=".LifeService"
+            android:enabled="true"
+            android:exported="true"></service>
+
+        <activity
+            android:name=".Screen.Personality.SettingsActivity"
+            android:exported="false" />
         <activity
             android:name=".GameScreen.GameHard"
             android:exported="false" />

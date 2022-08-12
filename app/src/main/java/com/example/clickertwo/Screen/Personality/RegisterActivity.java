@@ -6,7 +6,9 @@ import androidx.appcompat.widget.AppCompatButton;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +20,7 @@ import android.widget.Toast;
 
 import com.example.clickertwo.MainActivity;
 import com.example.clickertwo.R;
+import com.example.clickertwo.Screen.GameScreen;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -83,6 +86,12 @@ public class RegisterActivity extends AppCompatActivity {
                 }
                 else {
                     registerd(str_username, str_email, str_password);
+
+                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(RegisterActivity.this);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                    editor.putString("name", str_username);
+                    editor.commit();
                     //registerd(username, email, password, phone_number);
                 }
             }
@@ -105,6 +114,7 @@ public class RegisterActivity extends AppCompatActivity {
                             hasMap.put("username", username);
                             hasMap.put("password", password);
                             hasMap.put("email", email);
+                            hasMap.put("score", "0");
 
                             reference.setValue(hasMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override

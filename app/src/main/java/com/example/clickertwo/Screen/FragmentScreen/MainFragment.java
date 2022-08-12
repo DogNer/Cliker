@@ -10,42 +10,62 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewTreeViewModelStoreOwner;
 import androidx.viewpager.widget.ViewPager;
 
+import android.os.CountDownTimer;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.clickertwo.CardView.AdapterCard;
 import com.example.clickertwo.CardView.MeModelCard;
+import com.example.clickertwo.LifeService;
 import com.example.clickertwo.R;
 import com.example.clickertwo.Screen.GameScreen;
 
 import java.util.ArrayList;
+import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainFragment extends Fragment {
+    private static final long START_TIME_IN_MILLS = 1200000;
 
     AppCompatButton btnPlay;
+    LinearLayout textLeftTime;
 
     ArrayList<MeModelCard> modelArrayList;
     AdapterCard myAdapter;
     ViewPager viewPager;
 
-    TextView count_point, countLife;
+    TextView count_point, countLife, timerr;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private int mButtonPressed = 0;
+
+    private TextView mCounterTextView;
+    private TextView mTimeTextView;
+
+    public long mTimeLeftInMills = START_TIME_IN_MILLS;
+    public long mEndTime;
+    private boolean mTimeRunning = false;
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+
 
     public MainFragment() {
         // Required empty public constructor
     }
+
     public static MainFragment newInstance(String param1, String param2) {
         MainFragment fragment = new MainFragment();
         Bundle args = new Bundle();
@@ -53,6 +73,46 @@ public class MainFragment extends Fragment {
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putLong("millisLeft", mTimeLeftInMills);
+        editor.putLong("endTime", mEndTime);
+
+        editor.apply();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        int life = sharedPreferences.getInt("life", 7);
+
+        mTimeLeftInMills = sharedPreferences.getLong("millisLeft", START_TIME_IN_MILLS);
+        updateCountDownText();
+
+        mEndTime = sharedPreferences.getLong("endTime", 0);
+        mTimeLeftInMills = mEndTime - System.currentTimeMillis();
+
+        if(mTimeLeftInMills < 0){
+            mTimeLeftInMills = 0;
+            updateCountDownText();
+            if (life < 7 && !mTimeRunning){
+                resetTimer();
+            }
+        }
+        else {
+            mTimeRunning = false;
+            startTimer();
+        }
     }
 
     @Override
@@ -79,13 +139,71 @@ public class MainFragment extends Fragment {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        int age = sharedPreferences.getInt("score", 0);
+        int score = sharedPreferences.getInt("score", 0);
         int life = sharedPreferences.getInt("life", 7);
 
+        timerr = view.findViewById(R.id.timer_life);
+
+        /*if (life < 7){
+            mTimeLeftInMills = sharedPreferences.getLong("millisLeft", START_TIME_IN_MILLS) + START_TIME_IN_MILLS;
+        }*/
+
         countLife.setText(String.valueOf(life));
-        count_point.setText(String.valueOf(age));
+        count_point.setText(String.valueOf(score));
+
+
+        textLeftTime = view.findViewById(R.id.text_left_time);
+        if (life == 7){
+            textLeftTime.setVisibility(View.GONE);
+        }
 
         return view;
+    }
+
+    private void startTimer(){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        mEndTime = System.currentTimeMillis() + mTimeLeftInMills;
+
+        new CountDownTimer(mTimeLeftInMills, 1000){
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+                mTimeLeftInMills = millisUntilFinished;
+                updateCountDownText();
+            }
+
+            @Override
+            public void onFinish() {
+                int life = sharedPreferences.getInt("life", 7) + 1;
+                editor.putInt("life", life);
+                editor.commit();
+                countLife.setText(String.valueOf(life));
+
+                if (life < 7){
+                    resetTimer();
+                }
+                else {
+                    textLeftTime.setVisibility(View.GONE);
+                }
+            }
+        }.start();
+    }
+
+    private void updateCountDownText() {
+        int minuts = (int) (mTimeLeftInMills / 1000) / 60;
+        int sec = (int) (mTimeLeftInMills / 1000) % 60;
+
+        String timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minuts, sec);
+
+        timerr.setText(timeLeftFormatted);
+    }
+
+    private void resetTimer(){
+        mTimeLeftInMills = START_TIME_IN_MILLS;
+        updateCountDownText();
+        startTimer();
     }
 
     private void loadCard() {
@@ -108,6 +226,7 @@ public class MainFragment extends Fragment {
 
         DisplayMetrics dm = getResources().getDisplayMetrics();
         float fwidth = dm.density * dm.widthPixels;
+        float fheight = dm.density * dm.heightPixels;
 
         myAdapter = new AdapterCard(getActivity(), modelArrayList);
         viewPager.setAdapter(myAdapter);
